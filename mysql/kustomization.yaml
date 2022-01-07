@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+commonLabels:
+  component: mysql
+
+secretGenerator:
+  - name: mysql
+    env: .env
+
+resources:
+  - statefulset.yaml
+  - service.yaml

@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: phpmyadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: phpmyadmin
+  template:
+    metadata:
+      labels:
+        name: phpmyadmin
+    spec:
+      containers:
+        - image: phpmyadmin:latest
+          name: phpmyadmin
+          ports:
+            - name: http
+              containerPort: 80
+          env:
+            - name: PMA_HOST
+              value: mysql
+            - name: PMA_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: MYSQL_USER
+            - name: PMA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: MYSQL_PASSWORD
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+      terminationGracePeriodSeconds: 30
+      restartPolicy: Always
