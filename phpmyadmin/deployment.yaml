@@ -13,7 +13,7 @@ spec:
         name: phpmyadmin
     spec:
       containers:
-        - image: phpmyadmin:latest
+        - image: phpmyadmin:5.1.1-apache
           name: phpmyadmin
           ports:
             - name: http

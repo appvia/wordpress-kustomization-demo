@@ -13,7 +13,7 @@ spec:
         name: wordpress
     spec:
       containers:
-        - image: wordpress:latest
+        - image: wordpress:5.8.2-php7.4-apache
           name: wordpress
           ports:
             - name: http
